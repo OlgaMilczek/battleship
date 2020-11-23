@@ -1,25 +1,13 @@
 import Ship from './Ship';
+import createBoard from './createBoard';
 
 class GameBoard {
     constructor() {
-        this.board = this.createBoard();
-        this.allShipsSunk = false;
+        this.board = createBoard();
         this.adjacentFields = this.createAdjacentFields(); 
         this.ships = {};
         this.gameOver = false;
         this.sunkShip = 0;
-    }
-
-    createBoard() {
-        let board = [];
-        for (let i = 0; i < 10; i ++) {
-            const row = [];
-            for (let j = 0; j < 10; j ++) {
-                row.push(null);
-            }
-            board.push(row);
-        }
-        return board;
     }
 
     createAdjacentFields() {
@@ -99,7 +87,8 @@ class GameBoard {
                 this.board[currentX][currentY] = [shipName, i];
                 const placedShip = new Ship(shipName, shipLength);
                 this.ships = {...this.ships, 
-                    [shipName]: placedShip};
+                    [shipName]: placedShip
+                };
             }
         }
     }
@@ -112,6 +101,8 @@ class GameBoard {
     }
 
     receiveAttack(coordinates) {
+        let isHit = false; 
+        let isSunk = false;
         if (!this.gameOver) {
             const [x, y] = coordinates;
             if (this.board[x][y] === null) {
@@ -119,16 +110,16 @@ class GameBoard {
             } else {
                 const [shipName, hitPlace] = this.board[x][y];
                 this.board[x][y] = [shipName, 'hit'];
-                if (hitPlace === 'hit') {
-                    return;
-                }
                 const hitShip = this.ships[shipName];
                 hitShip.hit(hitPlace);
+                isHit = true;
                 if (hitShip.sunk) {
+                    isSunk = true;
                     this.sunkShip += 1;
                     this.checkForGameOver();
                 }
             }
+            return [isHit, isSunk];
         }
     }
 }
