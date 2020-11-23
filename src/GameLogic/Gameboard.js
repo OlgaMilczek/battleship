@@ -1,18 +1,13 @@
-import Ship from './Ship'
+import Ship from './Ship';
 
 class GameBoard {
-    constructor(props) {
+    constructor() {
         this.board = this.createBoard();
         this.allShipsSunk = false;
         this.adjacentFields = this.createAdjacentFields(); 
-        this.Carrier = new Ship('carrier', 5);
-        this.ships = {
-            'Battleship': new Ship('Battleship', 4),
-            'Destroyer': new Ship('Destroyer', 3),
-            'Submarine': new Ship('Submarine', 3),
-            'Patrol Boat': new Ship('Patrol Boat', 2)
-        };
+        this.ships = {};
         this.gameOver = false;
+        this.sunkShip = 0;
     }
 
     createBoard() {
@@ -68,8 +63,10 @@ class GameBoard {
                 const [deltaX, deltaY] = nextCoord;
                 const currentX = x + (i * nextX) + deltaX;
                 const currentY = y + (i * nextY) + deltaY;
-                if (this.checkFiledExist([currentX, currentY])) {
-                    if (!this.checkField) {
+                const filedExist = this.checkFiledExist([currentX, currentY]);
+                if (filedExist) {
+                    const fieldChecked = this.checkField([currentX, currentY]);
+                    if (!fieldChecked) {
                         return false;
                     }
                 }
@@ -78,7 +75,7 @@ class GameBoard {
         }
     }
 
-    placeShip(ship, coordinates, position) {
+    placeShip(shipName, shipLength, coordinates, position) {
         /*This function should take Ship component, 
         coordinates of the first element of ship, 
         and position (vertical or horizontal) as a arguments. 
@@ -93,34 +90,45 @@ class GameBoard {
         } else {
             throw new Error('Wrong position!');
         }
-        if (this.checkShipPlacement(ship.length, coordinates, nextField)) {
-            for (let i = 0; i < ship.length; i++) {
+        const shipCanBePlaced = this.checkShipPlacement(shipLength, coordinates, nextField);
+        if (shipCanBePlaced) {
+            for (let i = 0; i < shipLength; i++) {
                 const [nextX, nextY] = nextField;
                 const currentX = x + (i * nextX);
                 const currentY = y + (i * nextY);
-                this.board[currentX][currentY] = [ship.name, i];
+                this.board[currentX][currentY] = [shipName, i];
+                const placedShip = new Ship(shipName, shipLength);
+                this.ships = {...this.ships, 
+                    [shipName]: placedShip};
             }
         }
     }
 
     checkForGameOver() {
-        for (let ship in this.ships) {
-            if (this.ships[ship].sunk === false) {
-                return false;
-            }
+        if (Object.keys(this.ships).length === this.sunkShip) {
+            return this.gameOver = true;
         }
-        return true;
+        return this.gameOver = false;
     }
 
     receiveAttack(coordinates) {
-        const [x, y] = coordinates;
-        if (this.board[x][y] === null) {
-            this.board[x][y] = 'miss';
-        } else {
-            const [shipName, hitPlace] = this.board[x][y];
-            const hitShip = this.ship[shipName];
-            hitShip.hit(hitPlace);
-            this.checkForGameOver();
+        if (!this.gameOver) {
+            const [x, y] = coordinates;
+            if (this.board[x][y] === null) {
+                this.board[x][y] = 'miss';
+            } else {
+                const [shipName, hitPlace] = this.board[x][y];
+                this.board[x][y] = [shipName, 'hit'];
+                if (hitPlace === 'hit') {
+                    return;
+                }
+                const hitShip = this.ships[shipName];
+                hitShip.hit(hitPlace);
+                if (hitShip.sunk) {
+                    this.sunkShip += 1;
+                    this.checkForGameOver();
+                }
+            }
         }
     }
 }
