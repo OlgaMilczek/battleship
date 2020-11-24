@@ -1,11 +1,16 @@
-function randomMove() {
-    return Math.floor(Math.random() * 10);
+function randomMove(num) {
+    return Math.floor(Math.random() * num);
 }
 
 function computerMove() {
-    const x = randomMove();
-    const y = randomMove();
+    const x = randomMove(10);
+    const y = randomMove(10);
     return [ x, y ];
 }
 
-export default computerMove;
+function randomPosition() {
+    let positions = ['vertical', 'horizontal'];
+    return positions[randomMove(2)];
+}
+
+export  {computerMove, randomPosition};

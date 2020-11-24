@@ -9,12 +9,12 @@ const WelcomeSite = (props) => {
     };
 
     return (
-        <div class='o-welcome'>
-            <h1 class='title' >Battleships</h1>
-            <form class = 'm-form' onSubmit={onSubmit}>
+        <div className='o-welcome'>
+            <h1 className='title' >Battleships</h1>
+            <form className = 'm-form' onSubmit={onSubmit}>
                 <label>Input your name:</label>
-                <input type='text' class = 'eightbit' onChange={(e) => setName(e.target.value)} value={name}/>
-                <button class ='eightbit eightbit-btn' >Let's play</button>
+                <input type='text' className = 'eightbit' onChange={(e) => setName(e.target.value)} value={name}/>
+                <button className ='eightbit eightbit-btn' >Let's play</button>
             </form>
         </div>
     );

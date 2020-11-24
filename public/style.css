@@ -22,6 +22,15 @@ body {
 
 #root {
     font-family: 'Press Start 2P', cursive;
+    height: 100%;
+}
+
+.o-welcome {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left:0;
 }
 
 .title {
@@ -31,16 +40,15 @@ body {
     text-align: center;
 }
 
-.m-form {
+.m-form,
+.newGame {
     padding: 20px;
     width: 350px;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
+    margin: auto;
+    margin-top: 15vh;
     text-align: center;
     font-size: 16px;
 }
@@ -65,6 +73,8 @@ body {
 
 .eightbit-btn,
 .m-form input {
+    margin-left: auto;
+    margin-right: auto;
     cursor: pointer; 
     cursor: url('images/cursors.png'), auto;
 }
@@ -100,4 +110,46 @@ body {
         top: 0;
         border-left: var(--outline-width) black solid;
         border-right: var(--outline-width) black solid;
+}
+
+.preparation {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.preparation h2 {
+    margin: 20px auto;
+    font-size: 24px;
+}
+
+.playerBoard {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    grid-gap: 2px;
+    background-color:black;
+    border: 2px solid black;
+    width: min-content;
+    margin: auto;
+}
+
+.field {
+    background-color: white;
+}
+
+.miss {
+    background-color: rgb(216, 205, 205);
+}
+
+.hit {
+    background-color: rgb(145, 86, 86);
+}
+
+.sunk {
+    background-color: rgb(112, 52, 52);
+}
+
+.ship {
+    background-color: rgb(50, 54, 102);
 }

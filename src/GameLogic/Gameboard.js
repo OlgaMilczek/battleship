@@ -56,10 +56,14 @@ class GameBoard {
                     if (!fieldChecked) {
                         return false;
                     }
+                } else {
+                    if (deltaX === 0 && deltaY===0) {
+                        return false;
+                    }
                 }
             }
-            return true;
         }
+        return true;
     }
 
     checkNextCoordinates(position) {
@@ -89,13 +93,14 @@ class GameBoard {
                 const currentX = x + (i * nextX);
                 const currentY = y + (i * nextY);
                 this.board[currentX][currentY] = [shipName, i];
-                const placedShip = new Ship(shipName, shipLength);
-                this.ships = {...this.ships, 
-                    [shipName]: placedShip
-                };
             }
+            const placedShip = new Ship(shipName, shipLength);
+            this.ships = {...this.ships, 
+                [shipName]: placedShip
+            };
             return true;
         }
+        return false;
     }
 
     removeShip(shipName, coordinates, position) {

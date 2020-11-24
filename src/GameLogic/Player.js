@@ -3,11 +3,12 @@ import GameBoard from './Gameboard';
 import createBoard from './createBoard';
 
 class Player {
-    constructor(name, checkMove) {
+    constructor(name, nr ,checkMove) {
         this.name = name;
         this.opponentBoard = createBoard();
         this.gameBoard = new GameBoard();
         this.checkMove = checkMove;
+        this.number = nr;
     } 
 
     makeShipSunk(x, y) {
@@ -30,7 +31,7 @@ class Player {
     makeMove(coordinates) {
         const [x, y] = coordinates; 
         if (this.opponentBoard[x][y] === null) {
-            const [opponentHit, opponentSunk] = this.checkMove(coordinates);
+            const [opponentHit, opponentSunk] = this.checkMove(coordinates, this.number);
             if (opponentHit && !opponentSunk) {
                 this.opponentBoard[x][y] = 'hit';
             }
