@@ -6,7 +6,6 @@ class GameBoard {
         this.board = createBoard();
         this.adjacentFields = this.createAdjacentFields(); 
         this.ships = {};
-        this.gameOver = false;
         this.sunkShip = 0;
     }
 
@@ -63,14 +62,8 @@ class GameBoard {
         }
     }
 
-    placeShip(shipName, shipLength, coordinates, position) {
-        /*This function should take Ship component, 
-        coordinates of the first element of ship, 
-        and position (vertical or horizontal) as a arguments. 
-        It's checks that the ship can be placed, 
-        and if it can place the ship. */
+    checkNextCoordinates(position) {
         let nextField;
-        const [x, y] = coordinates;
         if (position === 'horizontal') {
             nextField = [1,0];
         } else if (position === 'vertical') {
@@ -78,6 +71,17 @@ class GameBoard {
         } else {
             throw new Error('Wrong position!');
         }
+        return nextField;
+    }
+
+    placeShip(shipName, shipLength, coordinates, position) {
+        /*This function should take Ship component, 
+        coordinates of the first element of ship, 
+        and position (vertical or horizontal) as a arguments. 
+        It's checks that the ship can be placed, 
+        and if it can place the ship. */
+        const nextField = this.checkNextCoordinates(position);
+        const [x, y] = coordinates;
         const shipCanBePlaced = this.checkShipPlacement(shipLength, coordinates, nextField);
         if (shipCanBePlaced) {
             for (let i = 0; i < shipLength; i++) {
@@ -90,37 +94,42 @@ class GameBoard {
                     [shipName]: placedShip
                 };
             }
+            return true;
         }
     }
 
-    checkForGameOver() {
-        if (Object.keys(this.ships).length === this.sunkShip) {
-            return this.gameOver = true;
+    removeShip(shipName, coordinates, position) {
+        const [x, y] = coordinates;
+        const shipLength = this.ships[shipName].length;
+        const nextField = this.checkNextCoordinates(position);
+        for (let i = 0; i < shipLength; i++) {
+            const [nextX, nextY] = nextField;
+            const currentX = x + (i * nextX);
+            const currentY = y + (i * nextY);
+            this.board[currentX][currentY] = null;
+            delete this.ships[shipName];
         }
-        return this.gameOver = false;
+        return {shipName: shipLength};
     }
 
     receiveAttack(coordinates) {
         let isHit = false; 
         let isSunk = false;
-        if (!this.gameOver) {
-            const [x, y] = coordinates;
-            if (this.board[x][y] === null) {
-                this.board[x][y] = 'miss';
-            } else {
-                const [shipName, hitPlace] = this.board[x][y];
-                this.board[x][y] = [shipName, 'hit'];
-                const hitShip = this.ships[shipName];
-                hitShip.hit(hitPlace);
-                isHit = true;
-                if (hitShip.sunk) {
-                    isSunk = true;
-                    this.sunkShip += 1;
-                    this.checkForGameOver();
-                }
+        const [x, y] = coordinates;
+        if (this.board[x][y] === null) {
+            this.board[x][y] = 'miss';
+        } else {
+            const [shipName, hitPlace] = this.board[x][y];
+            this.board[x][y] = [shipName, 'hit'];
+            const hitShip = this.ships[shipName];
+            hitShip.hit(hitPlace);
+            isHit = true;
+            if (hitShip.sunk) {
+                isSunk = true;
+                this.sunkShip += 1;
             }
-            return [isHit, isSunk];
         }
+        return [isHit, isSunk];
     }
 }
 

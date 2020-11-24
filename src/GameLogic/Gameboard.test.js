@@ -1,12 +1,5 @@
 import GameBoard from './Gameboard';
 
-test('Create proper board', () => {
-    const newGame = new GameBoard();
-    expect(newGame.board.length).toBe(10);
-    const row = newGame.board[0];
-    expect(row.length).toBe(10);
-});
-
 test('Placed ship properly', () => {
     const newGame = new GameBoard();
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
@@ -53,12 +46,14 @@ test('Can\'t place two ships next to each other', () => {
 test('Hits field properly', () => {
     const newGame = new GameBoard();
     newGame.receiveAttack([ 0, 0 ]);
-    newGame.receiveAttack([ 3, 4 ]);
-    newGame.receiveAttack([ 7, 4 ]);
+    const response1 = newGame.receiveAttack([ 3, 4 ]);
+    const response2 = newGame.receiveAttack([ 7, 4 ]);
 
     expect(newGame.board[0][0]).toBe('miss');
     expect(newGame.board[3][4]).toBe('miss');
     expect(newGame.board[7][4]).toBe('miss');
+    expect(response1).toStrictEqual([false, false]);
+    expect(response2).toStrictEqual([false, false]);
 });
 
 
@@ -87,7 +82,7 @@ test('Sunk ship properly', () => {
     expect(newGame.sunkShip).toBe(1);
 });
 
-test('End game properly', () => {
+test('Sunk ship properly 2', () => {
     const newGame = new GameBoard();
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2 , [1 , 5], 'vertical');
@@ -97,12 +92,23 @@ test('End game properly', () => {
     newGame.receiveAttack([ 5, 4 ]);
     newGame.receiveAttack([ 6, 4 ]);
     newGame.receiveAttack([ 7, 4 ]);
-    newGame.receiveAttack([ 1, 5 ]);
-    newGame.receiveAttack([ 1, 6 ]);
+    const response1 = newGame.receiveAttack([ 1, 5 ]);
+    const response2 = newGame.receiveAttack([ 1, 6 ]);
 
     expect(newGame.sunkShip).toBe(2);
-    expect(newGame.gameOver).toBe(true);
+    expect(response1).toStrictEqual([true , false]);
+    expect(response2).toStrictEqual([true , true]);
 });
+
+test('Remove ship properly', () => {
+    const newGame = new GameBoard();
+    newGame.placeShip('Patrol Boat', 2 , [1 , 5], 'vertical');
+    newGame.removeShip('Patrol Boat', [1 , 5], 'vertical');
+    expect(newGame.board[1][5]).toBe(null);
+    expect(newGame.board[1][6]).toBe(null);
+    expect(newGame.ships['Patrol Boat']).toBe(undefined);
+});
+
 
 
 
