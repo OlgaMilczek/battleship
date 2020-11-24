@@ -1,0 +1,103 @@
+:root {
+    --outline-width: 6px;
+    --shadow-width: 4px;
+
+    --button-background: #cfcfcf;
+    --sec-button-background: #a3a3a3;
+    --shadow-color:  #7c7c7c;
+}
+
+* {
+    cursor: url('./images/indeks.png'), auto;
+}
+
+
+body {
+    background-color: #d2d3d6;
+    color: rgb(41, 40, 44);
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;  
+}
+
+#root {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.title {
+    padding-top: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 50px;
+    text-align: center;
+}
+
+.m-form {
+    padding: 20px;
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    text-align: center;
+    font-size: 16px;
+}
+
+.m-form label {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.eightbit {
+    background: var(--button-background);
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    margin: 0 20px;
+    margin-top: 20px;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    box-shadow: inset calc(-1 *var(--shadow-width)) calc(-1* var(--shadow-width)) 0px 0px var(--shadow-color);
+}
+
+.eightbit-btn,
+.m-form input {
+    cursor: pointer; 
+    cursor: url('images/cursors.png'), auto;
+}
+
+.eightbit-btn:hover,
+.eightbit-btn:focus {
+    background: var(--sec-button-background);
+    box-shadow: inset calc(-1,5 var(--shadow-width)) calc(var(--shadow-width)* -1.5) 0px 0px var(--shadow-color);
+}
+
+ .eightbit-btn:active {
+        box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px var(--shadow-color);
+    }
+
+.eightbit:before,
+.eightbit:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    }
+
+.eightbit:before {
+    top: calc(-1 * var(--outline-width));
+    left: 0;
+    border-top: var(--outline-width) black solid;
+    border-bottom: var(--outline-width) black solid;
+    }
+
+.eightbit:after {
+        left: calc(-1 * var(--outline-width));;
+        top: 0;
+        border-left: var(--outline-width) black solid;
+        border-right: var(--outline-width) black solid;
+}
