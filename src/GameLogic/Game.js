@@ -36,9 +36,10 @@ class Game {
     }
 
     checkForGameOver() {
-        const currPlayerBoard = this.players[this.currentPlayer].gameBoard;
-        const shipsLength = Object.keys(currPlayerBoard.ships).length;
-        if (currPlayerBoard.sunkShip === shipsLength) {
+        const opponentNr = (this.currentPlayer === 1 ? 2 : 1);
+        const opponentBoard = this.players[opponentNr].gameBoard;
+        const shipsLength = Object.keys(opponentBoard.ships).length;
+        if (opponentBoard.sunkShip === shipsLength) {
             this.gameOver = true;
         }
     }
