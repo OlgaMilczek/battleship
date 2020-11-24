@@ -1,14 +1,14 @@
 import Player from './Player';
 
-const alwaysSunk = (coordinates) => {
+const alwaysSunk = () => {
     return [true, true];
 };
 
-const alwaysHit = (coordinates) => {
+const alwaysHit = () => {
     return [true, false];
 };
 
-const alwaysMiss = (coordinates) => {
+const alwaysMiss = () => {
     return [false, false];
 };
 
@@ -49,5 +49,17 @@ test('Make ship sunk properly', () => {
     expect(newPlayer.opponentBoard[0][1]).toBe(null);
     expect(newPlayer.opponentBoard[0][6]).toBe(null);
     expect(newPlayer.opponentBoard[1][2]).toBe(null);
+});
+
+test('Move ship properly', () => {
+    const newPlayer = new Player('player', alwaysMiss, ships);
+    newPlayer.gameBoard.placeShip('Submarine',3 , [0,2], 'horizontal');
+    newPlayer.moveShip('Submarine', [0,2], 'horizontal' , [3,4], 'vertical');
+    expect(newPlayer.gameBoard.board[0][2]).toBe(null);
+    expect(newPlayer.gameBoard.board[1][2]).toBe(null);
+    expect(newPlayer.gameBoard.board[2][2]).toBe(null);
+    expect(newPlayer.gameBoard.board[3][4]).toStrictEqual(['Submarine', 0]);
+    expect(newPlayer.gameBoard.board[3][5]).toStrictEqual(['Submarine', 1]);
+    expect(newPlayer.gameBoard.board[3][6]).toStrictEqual(['Submarine', 2]);
 });
 

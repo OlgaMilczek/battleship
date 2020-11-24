@@ -1,4 +1,13 @@
 import Player from './Player';
+import computerMove from './computerMoves';
+
+const ships = {
+    'Carrier': 5, 
+    'Battleship': 4, 
+    'Destroyer': 3, 
+    'Submarine': 3, 
+    'Patrol Boat': 2
+};
 
 class Game {
     constructor(name1, name2) {
@@ -8,6 +17,8 @@ class Game {
         };
         this.currentPlayer = 1;
         this.gameOver = false;
+        this.gameStart = false;
+        this.ships = ships;
     }
 
     checkMove(coordinates) {
@@ -20,8 +31,31 @@ class Game {
         else {
             throw new Error ('Something is wrong! There should be only two players');
         }
-        const [opponentHit, opponentSunk] = opponent.board.receiveAttack(coordinates);
+        const [opponentHit, opponentSunk] = opponent.boardGame.receiveAttack(coordinates);
         return [opponentHit, opponentSunk];
+    }
+
+    checkForGameOver() {
+        const currPlayerBoard = this.players[this.currentPlayer].gameBoard;
+        const shipsLength = Object.keys(currPlayerBoard.ships).length;
+        if (currPlayerBoard.sunkShip === shipsLength) {
+            this.gameOver = true;
+        }
+    }
+
+    playRound(player, coordinates) {
+        const currentPlayer = this.players[this.currentPlayer];
+        if (player.name !== currentPlayer.name) {
+            return;
+        }
+        const moveMade = currentPlayer.makeMove(coordinates);
+        if(moveMade) {
+            this.currentPlayer === 1 ? this.currentPlayer=2 : this.currentPlayer=1;
+        }
+        if (this.players[this.currentPlayer].name === 'computer') {
+            const randomCoordinates = computerMove();
+            this.playRound(this.players[this.currentPlayer], randomCoordinates);
+        }
     }
 
 }
