@@ -96,7 +96,7 @@ test('Random ships placment work corectly', () => {
     expect(placedShipsLength2).toBe(shipsLength);
 });
 
-test('Can rarange board with random placement', () => {
+test('Can rearrange board with random placement', () => {
     const size = 10;
     const shipsLength = Object.keys(ships).length;
     //Set first player and place ship randomly.

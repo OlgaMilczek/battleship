@@ -5,10 +5,12 @@
     --button-background: #cfcfcf;
     --sec-button-background: #a3a3a3;
     --shadow-color:  #7c7c7c;
+    --font-family: 'Press Start 2P', cursive;
 }
 
 * {
     cursor: url('./images/indeks.png'), auto;
+    font-family: var(--font-family)
 }
 
 
@@ -21,11 +23,10 @@ body {
 }
 
 #root {
-    font-family: 'Press Start 2P', cursive;
     height: 100%;
 }
 
-.o-welcome {
+.o-popup {
     height: 100%;
     width: 100%;
     position: relative;
@@ -33,50 +34,61 @@ body {
     left:0;
 }
 
+.o-popup-overlay {
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(129, 129, 129, 0.5);
+    z-index: 5;
+    opacity: 1;
+}
+
+.newGame {
+    padding: 20px;
+    margin: auto;
+    position: fixed;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    text-align: center;
+    z-index: 10;
+}
+
+.newGame h2,
+.newGame h3 {
+    margin-bottom: 30px;
+}
+
+.newGame h2 {
+    font-size: 24px;
+}
+
 .title {
     padding-top: 50px;
-    font-family: 'Press Start 2P', cursive;
     font-size: 50px;
     text-align: center;
 }
 
-.m-form,
-.newGame {
-    padding: 20px;
-    width: 350px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin: auto;
-    margin-top: 15vh;
-    text-align: center;
-    font-size: 16px;
-}
-
-.m-form label {
-    padding: 10px;
-    margin-top: 20px;
-}
-
 .eightbit {
     background: var(--button-background);
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    padding: 10px;
-    margin: 0 20px;
-    margin-top: 20px;
-    font-family: 'Press Start 2P', cursive;
     color: white;
     box-shadow: inset calc(-1 *var(--shadow-width)) calc(-1* var(--shadow-width)) 0px 0px var(--shadow-color);
 }
 
-.eightbit-btn,
-.m-form input {
+.eightbit-btn {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding: 10px;
     margin-left: auto;
     margin-right: auto;
     cursor: pointer; 
-    cursor: url('images/cursors.png'), auto;
+    cursor: url('./images/cursors.png'), auto;
+    z-index: inherit;
 }
 
 .eightbit-btn:hover,
@@ -85,9 +97,9 @@ body {
     box-shadow: inset calc(-1,5 var(--shadow-width)) calc(var(--shadow-width)* -1.5) 0px 0px var(--shadow-color);
 }
 
- .eightbit-btn:active {
-        box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px var(--shadow-color);
-    }
+.eightbit-btn:active {
+    box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px var(--shadow-color);
+}
 
 .eightbit:before,
 .eightbit:after {
@@ -139,7 +151,7 @@ body {
 }
 
 .enemy {
-    cursor: url('images/cursors.png'), auto;
+    cursor: url('./images/cursors.png'), auto;
 }
 
 .miss {

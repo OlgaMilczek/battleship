@@ -1,16 +1,23 @@
 import React from 'react';
 
-const GameOver = (props) => {
+function GameOver(props) {
+    let content;
+    if (props.winner===1) {
+        content = 'You win! Congratulations!';
+    } else {
+        content = 'Computer wins! Try again!';
+    }
 
     return (
-        <div className='o-welcome'>
-            <h1 className='title' >Battleships</h1>
-            <div className='newGame'>
-                <h3>Game over</h3>
-                <button className ='eightbit eightbit-btn' onClick={props.startNewGame}>Play again</button>
+        <div className='o-popup'>
+            <div className = 'o-popup-overlay'></div>
+            <div className='newGame eightbit'>
+                <h2>Game over!</h2>
+                <h3>{content}</h3>
+                <div onClick={props.startNewGame} className='eightbit eightbit-btn'>Play again</div>
             </div>
         </div>
     );
-};
+}
 
 export default GameOver;

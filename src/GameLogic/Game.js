@@ -12,7 +12,7 @@ const ships = {
 const SIZE = 10;
 
 class Game {
-    constructor(gameMode, setMoveMade, setGameOver) {
+    constructor(gameMode, setMoveMade, setWinner) {
         this.checkMove = this.checkMove.bind(this);
         this.playRound = this.playRound.bind(this);
         this.checkForGameOver = this.checkForGameOver.bind(this);
@@ -23,7 +23,8 @@ class Game {
         this.players[1].placeShipRandom(SIZE, this.ships);
         this.players[2].placeShipRandom(SIZE, this.ships);
         this.setMoveMade = setMoveMade;
-        this.setGameOver = setGameOver;
+        this.setWinner = setWinner;
+        this.winner = 0;
     }
 
     setPlayers(gameMode) {
@@ -65,7 +66,7 @@ class Game {
         const shipsLength = Object.keys(opponentBoard.ships).length;
         if (opponentBoard.sunkShip === shipsLength) {
             this.gameOver = true;
-            this.setGameOver(true);
+            this.setWinner(this.currentPlayer);
         }
     }
 

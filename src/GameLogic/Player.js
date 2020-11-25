@@ -19,12 +19,13 @@ class Player {
             let [deltaX, deltaY] = possiblePosition[i];
             let nextX = x + deltaX;
             let nextY = y + deltaY;
-            const filedExist = this.gameBoard.checkFiledExist([nextX, nextY]);
+            let filedExist = this.gameBoard.checkFiledExist([nextX, nextY]);
             if(filedExist) {
-                while (this.opponentBoard[nextX][nextY] === 'hit') {
+                while (filedExist && this.opponentBoard[nextX][nextY] === 'hit') {
                     this.opponentBoard[nextX][nextY] = 'sunk';
                     nextX += deltaX;
                     nextY += deltaY;
+                    filedExist = this.gameBoard.checkFiledExist([nextX, nextY]);
                 }
             }
         }
