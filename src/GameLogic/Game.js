@@ -1,5 +1,5 @@
 import Player from './Player';
-import {computerMove, randomPosition} from './computerMoves';
+import {computerMove} from './computerMoves';
 
 const ships = {
     'Carrier': 5, 
@@ -9,23 +9,41 @@ const ships = {
     'Patrol Boat': 2
 };
 
+const SIZE = 10;
+
 class Game {
-    constructor(name1, name2, setMoveMade, setGameOver) {
+    constructor(gameMode, setMoveMade, setWinner) {
         this.checkMove = this.checkMove.bind(this);
         this.playRound = this.playRound.bind(this);
-        this.placeShipRandom = this.placeShipRandom.bind(this);
         this.checkForGameOver = this.checkForGameOver.bind(this);
-        this.players = {
-            1: new Player(name1, 1 ,this.checkMove),
-            2: new Player(name2, 2 ,this.checkMove)
-        };
+        this.players = this.setPlayers(gameMode);
         this.currentPlayer = 1;
         this.gameOver = false;
         this.ships = ships;
-        this.placeShipRandom(1);
-        this.placeShipRandom(2);
+        this.players[1].placeShipRandom(SIZE, this.ships);
+        this.players[2].placeShipRandom(SIZE, this.ships);
         this.setMoveMade = setMoveMade;
-        this.setGameOver = setGameOver;
+        this.setWinner = setWinner;
+        this.winner = 0;
+    }
+
+    setPlayers(gameMode) {
+        let players = {};
+        if (gameMode === 'one player') {
+            players = {
+                1: new Player(1, false, this.checkMove, SIZE),
+                2: new Player(2, true, this.checkMove, SIZE)
+            };
+        } else if (gameMode === 'two player') {
+            players = {
+                1: new Player(1, false ,this.checkMove, SIZE),
+                2: new Player(2, false ,this.checkMove, SIZE)
+            };
+        } else {
+            throw new Error('Wrong number of players!');
+        }
+        return players;
+
     }
 
     checkMove(coordinates, playerNr) {
@@ -48,7 +66,7 @@ class Game {
         const shipsLength = Object.keys(opponentBoard.ships).length;
         if (opponentBoard.sunkShip === shipsLength) {
             this.gameOver = true;
-            this.setGameOver(true);
+            this.setWinner(this.currentPlayer);
         }
     }
 
@@ -67,30 +85,11 @@ class Game {
                     this.currentPlayer = 1;
                 }
             }
-            if (this.players[this.currentPlayer].name === 'computer') {
+            if (this.players[this.currentPlayer].isComputer) {
                 const randomCoordinates = computerMove();
                 this.playRound(this.currentPlayer, randomCoordinates);
             }
             this.setMoveMade(true);
-        }
-    }
-
-    startGame() {
-        //Trzeba sprawdzić czy zawodnicy ustalawili wszystkie statk. 
-        //Jeśli jeden z zawodników to komputer to trzeba losowo ustawić statki. 
-        
-    }
-
-    placeShipRandom(playerNr) {
-        let playerBoard = this.players[playerNr].gameBoard;
-        for (let shipName in this.ships) {
-            const shipsLength = this.ships[shipName];
-            let shipPlaced;
-            while (!shipPlaced) {
-                let coordinates = computerMove(); 
-                let position = randomPosition();
-                shipPlaced = playerBoard.placeShip(shipName, shipsLength, coordinates, position);
-            }
         }
     }
 }

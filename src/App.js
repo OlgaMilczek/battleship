@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 
 import Game from './GameLogic/Game';
 
-import WelcomeSite from './Components/WelcomeSite';
 import GameOver from './Components/GameOver';
 import GameRender from './Components/Game';
 
@@ -10,17 +9,11 @@ import GameRender from './Components/Game';
 let game = undefined;
 
 function App() {
-    const [gameStatus, setGameStatus] = useState('not started');
-    const [playerName, setPlayerName] = useState('');
+    const [gameStatus, setGameStatus] = useState('preparing');
     const [moveMade, setMoveMade] = useState(false);
-    const [gameOver, setGameOver] = useState(false);
-    const [boardRearrange, setBoardRearrange] = useState(false);
-
-    useEffect(() => {
-        if (playerName !== '' && gameStatus === 'not started') {
-            setGameStatus('preparing');
-        }
-    }, [playerName, gameStatus]);
+    const [winner, setWinner] = useState('');
+    //For future development of two players mode.
+    const [gameMode, setGameMode] = useState('one player');
 
     useEffect(() => {
         if (moveMade === true) {
@@ -29,37 +22,25 @@ function App() {
     }, [moveMade]);
 
     useEffect(() => {
-        if (gameOver) {
+        if (winner !== '') {
             setGameStatus('game over');
         }
-    }, [gameOver]);
-
-
-    useEffect(() => {
-        if (boardRearrange === true) {
-            setBoardRearrange(false);
-        }
-    }, [boardRearrange]);
+    }, [winner]);
 
     const startNewGame = () => {
         setGameStatus('preparing');
     };
 
-    if (gameStatus === 'not started') {
-        return <WelcomeSite setPlayerName ={setPlayerName}/>;
-    }
-
     if (gameStatus === 'preparing') {
-        game = new Game(playerName, 'computer', setMoveMade, setGameOver);
-        setGameStatus('running');
-    }
-
-    if (gameStatus === 'game over') {
-        return <GameOver startNewGame={startNewGame}/>;
+        game = new Game(gameMode, setMoveMade, setWinner);
+        setGameStatus('ship placement');
     }
     
     return (
-        <GameRender game = {game} setBoardRearrange={setBoardRearrange}/>
+        <div>
+            <GameRender game = {game}/>
+            {gameStatus === 'game over'? <GameOver startNewGame={startNewGame} winner={winner}/> : null}
+        </div>
     );
 }
 
