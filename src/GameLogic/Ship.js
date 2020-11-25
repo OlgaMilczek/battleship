@@ -1,9 +1,10 @@
 class Ship {
-    constructor(name, length) {
-        this.name = name; 
+    constructor(length, position, coordinates) {
         this.length = length; 
         this.sunk = false; 
         this.hits = this.createListOfHits();
+        this.position = position;
+        this.coordinates = coordinates;
     }
 
     createListOfHits() {
@@ -29,6 +30,14 @@ class Ship {
             }
         }
         return this.sunk = true;
+    }
+
+    changeLocation(newPosition, newCoordinates) {
+        if (newPosition !== 'horizontal' || newPosition !== 'vertical') {
+            throw new Error ('Somthing went wrong! Wrong ship position');
+        }
+        this.position = newPosition;
+        this.coordinates = newCoordinates;
     }
 }
 
