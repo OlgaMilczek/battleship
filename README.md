@@ -8,7 +8,7 @@ The main goal was to create app with using TDD and separate game logic from rend
 
 ## Used technologies
 
-This project was created with:\
+This project was created with:
 * React JS i for UI
 * JavaScript for Game Logic. 
 * Jest
