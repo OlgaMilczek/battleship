@@ -1,15 +1,16 @@
 import GameBoard from './Gameboard';
 
-import createBoard from './createBoard';
+import {computerMove, randomPosition} from './computerMoves';
 
 class Player {
-    constructor(name, nr ,checkMove) {
-        this.name = name;
-        this.opponentBoard = createBoard();
-        this.gameBoard = new GameBoard();
+    constructor(nr, isComputer ,checkMove, size) {
+        this.gameBoard = new GameBoard(size);
+        this.opponentBoard = this.gameBoard.createBoard(size);
         this.checkMove = checkMove;
         this.number = nr;
+        this.isComputer = isComputer;
         this.makeMove = this.makeMove.bind(this);
+        this.placeShipRandom = this.placeShipRandom.bind(this);
     } 
 
     makeShipSunk(x, y) {
@@ -47,13 +48,30 @@ class Player {
         return false;
     }
 
-    moveShip(shipName, OldCoordinates, OldPosition, NewCoordinates, NewPosition) {
-        const removedShip = this.gameBoard.removeShip(shipName, OldCoordinates, OldPosition);
-        const shipLength = removedShip.shipName;
+    moveShip(shipName, NewCoordinates, NewPosition) {
+        const OldCoordinates = this.gameBoard.ships[shipName].coordinates;
+        const OldPosition = this.gameBoard.ships[shipName].position;
+        const shipLength = this.gameBoard.ships[shipName].length;
+        this.gameBoard.removeShip(shipName, OldCoordinates, OldPosition);
         const canShipBeMoved = this.gameBoard.placeShip(shipName, shipLength,  NewCoordinates, NewPosition);
         if (!canShipBeMoved) {
             this.gameBoard.placeShip(shipName, shipLength,  OldCoordinates, OldPosition);
         }
+    }
+
+
+    placeShipRandom(size, ships) {
+        let newBoard = new GameBoard(size);
+        for (let shipName in ships) {
+            const shipsLength = ships[shipName];
+            let shipPlaced;
+            while (!shipPlaced) {
+                let coordinates = computerMove(); 
+                let position = randomPosition();
+                shipPlaced = newBoard.placeShip(shipName, shipsLength, coordinates, position);
+            }
+        }
+        this.gameBoard = newBoard;
     }
 }
 

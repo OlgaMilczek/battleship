@@ -12,13 +12,8 @@ const alwaysMiss = () => {
     return [false, false];
 };
 
-const ships = {
-    'Submarine': 3, 
-    'Patrol Boat': 2
-};
-
 test('Mark miss properly', () => {
-    const newPlayer = new Player('player', alwaysMiss, ships);
+    const newPlayer = new Player(1, false, alwaysMiss, 10);
     newPlayer.makeMove([3,5]);
     newPlayer.makeMove([3,7]);
     expect(newPlayer.opponentBoard[3][5]).toBe('miss');
@@ -27,7 +22,7 @@ test('Mark miss properly', () => {
 });
 
 test('Make opponent ship hit properly', () => {
-    const newPlayer = new Player('player', alwaysHit, ships);
+    const newPlayer = new Player(1, false, alwaysHit, 10);
     newPlayer.makeMove([0,5]);
     newPlayer.makeMove([3,7]);
     expect(newPlayer.opponentBoard[0][5]).toBe('hit');
@@ -37,7 +32,7 @@ test('Make opponent ship hit properly', () => {
 
 
 test('Make ship sunk properly', () => {
-    const newPlayer = new Player('player', alwaysSunk, ships);
+    const newPlayer = new Player(1, true, alwaysSunk, 10);
     newPlayer.opponentBoard[0][2] = 'hit';
     newPlayer.opponentBoard[0][3] = 'hit';
     newPlayer.opponentBoard[0][4] = 'hit';
@@ -52,9 +47,9 @@ test('Make ship sunk properly', () => {
 });
 
 test('Move ship properly', () => {
-    const newPlayer = new Player('player', alwaysMiss, ships);
+    const newPlayer = new Player(1, false, alwaysMiss, 10);
     newPlayer.gameBoard.placeShip('Submarine',3 , [0,2], 'horizontal');
-    newPlayer.moveShip('Submarine', [0,2], 'horizontal' , [3,4], 'vertical');
+    newPlayer.moveShip('Submarine' , [3,4], 'vertical');
     expect(newPlayer.gameBoard.board[0][2]).toBe(null);
     expect(newPlayer.gameBoard.board[1][2]).toBe(null);
     expect(newPlayer.gameBoard.board[2][2]).toBe(null);
@@ -64,10 +59,10 @@ test('Move ship properly', () => {
 });
 
 test('Ships stays tha same place when it cannot be moved', () => {
-    const newPlayer = new Player('player', alwaysMiss, ships);
+    const newPlayer = new Player(1, false, alwaysMiss, 10);
     newPlayer.gameBoard.placeShip('Submarine',3 , [0,2], 'horizontal');
     newPlayer.gameBoard.placeShip('Patrol boat',2 , [3,4], 'horizontal');
-    newPlayer.moveShip('Submarine', [0,2], 'horizontal' , [3,4], 'vertical');
+    newPlayer.moveShip('Submarine', [3,4], 'vertical');
     expect(newPlayer.gameBoard.board[0][2]).toStrictEqual(['Submarine', 0]);
     expect(newPlayer.gameBoard.board[1][2]).toStrictEqual(['Submarine', 1]);
     expect(newPlayer.gameBoard.board[2][2]).toStrictEqual(['Submarine', 2]);

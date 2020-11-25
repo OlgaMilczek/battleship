@@ -126,7 +126,6 @@ class GameBoard {
             this.board[currentX][currentY] = null;
             delete this.ships[shipName];
         }
-        return {shipName: shipLength};
     }
 
     receiveAttack(coordinates) {
