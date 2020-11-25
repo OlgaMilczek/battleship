@@ -1,14 +1,25 @@
 import Ship from './Ship';
-import createBoard from './createBoard';
 
 class GameBoard {
-    constructor() {
-        this.board = createBoard();
+    constructor(size) {
+        this.board = this.createBoard(size);
         this.adjacentFields = this.createAdjacentFields(); 
         this.ships = {};
         this.sunkShip = 0;
     }
 
+    createBoard(size) {
+        let board = [];
+        for (let i = 0; i < size; i ++) {
+            const row = [];
+            for (let j = 0; j < size; j ++) {
+                row.push(null);
+            }
+            board.push(row);
+        }
+        return board;
+    }
+    
     createAdjacentFields() {
         let allFields = []; 
         let coordinatesXY = [-1, 0, 1];
@@ -20,18 +31,18 @@ class GameBoard {
         }
         return allFields;
     }
-
+    
     checkFiledExist(coordinates) {
         const [x, y] = coordinates;
         if (x < 0 || x >= this.board[0].length) {
             return false;
-        } else if (y < 0 || y >= this.board.length) {
+        } else if (y < 0 || y >=  this.board.length) {
             return false;
         } else {
             return true;
         }
     }
-
+    
     checkField(coordinates) {
         const [x, y] = coordinates;
         if (this.board[x][y] === null) {
@@ -39,6 +50,18 @@ class GameBoard {
         } else {
             return false;
         }
+    }
+    
+    checkNextCoordinates(position) {
+        let nextField;
+        if (position === 'horizontal') {
+            nextField = [1,0];
+        } else if (position === 'vertical') {
+            nextField = [0,1];
+        } else {
+            throw new Error('Wrong position!');
+        }
+        return nextField;
     }
 
     checkShipPlacement(shipLength, coordinates, nextField) {
@@ -50,9 +73,9 @@ class GameBoard {
                 const [deltaX, deltaY] = nextCoord;
                 const currentX = x + (i * nextX) + deltaX;
                 const currentY = y + (i * nextY) + deltaY;
-                const filedExist = this.checkFiledExist([currentX, currentY]);
+                const filedExist = this.checkFiledExist([currentX, currentY], this.board);
                 if (filedExist) {
-                    const fieldChecked = this.checkField([currentX, currentY]);
+                    const fieldChecked = this.checkField([currentX, currentY], this.board);
                     if (!fieldChecked) {
                         return false;
                     }
@@ -64,18 +87,6 @@ class GameBoard {
             }
         }
         return true;
-    }
-
-    checkNextCoordinates(position) {
-        let nextField;
-        if (position === 'horizontal') {
-            nextField = [1,0];
-        } else if (position === 'vertical') {
-            nextField = [0,1];
-        } else {
-            throw new Error('Wrong position!');
-        }
-        return nextField;
     }
 
     placeShip(shipName, shipLength, coordinates, position) {
@@ -94,7 +105,7 @@ class GameBoard {
                 const currentY = y + (i * nextY);
                 this.board[currentX][currentY] = [shipName, i];
             }
-            const placedShip = new Ship(shipName, shipLength);
+            const placedShip = new Ship(shipLength, position, coordinates);
             this.ships = {...this.ships, 
                 [shipName]: placedShip
             };
@@ -103,8 +114,9 @@ class GameBoard {
         return false;
     }
 
-    removeShip(shipName, coordinates, position) {
-        const [x, y] = coordinates;
+    removeShip(shipName) {
+        const position = this.ships[shipName].position;
+        const [x, y] = this.ships[shipName].coordinates;
         const shipLength = this.ships[shipName].length;
         const nextField = this.checkNextCoordinates(position);
         for (let i = 0; i < shipLength; i++) {

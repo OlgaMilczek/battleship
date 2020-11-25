@@ -1,7 +1,7 @@
 import GameBoard from './Gameboard';
 
 test('Placed ship properly', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2 , [1 , 5], 'vertical');
     expect(newGame.board[3][4]).toStrictEqual(['Carrier', 0]);
@@ -14,14 +14,14 @@ test('Placed ship properly', () => {
 });
 
 test('Can placed ship along border', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Patrol Boat', 2 , [9 , 5], 'vertical');
     expect(newGame.board[9][5]).toStrictEqual(['Patrol Boat', 0]);
     expect(newGame.board[9][6]).toStrictEqual(['Patrol Boat', 1]);
 });
 
 test('Can\'t place two ships in one place', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5, [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2, [4 , 4], 'vertical');
     expect(newGame.board[3][4]).toStrictEqual(['Carrier', 0]);
@@ -32,7 +32,7 @@ test('Can\'t place two ships in one place', () => {
 });
 
 test('Can\'t place two ships next to each other', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2 , [3 , 5], 'horizontal');
     expect(newGame.board[3][4]).toStrictEqual(['Carrier', 0]);
@@ -44,7 +44,7 @@ test('Can\'t place two ships next to each other', () => {
 });
 
 test('Hits field properly', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.receiveAttack([ 0, 0 ]);
     const response1 = newGame.receiveAttack([ 3, 4 ]);
     const response2 = newGame.receiveAttack([ 7, 4 ]);
@@ -58,7 +58,7 @@ test('Hits field properly', () => {
 
 
 test('Hits ship properly', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.receiveAttack([ 3, 4 ]);
     newGame.receiveAttack([ 7, 4 ]);
@@ -68,7 +68,7 @@ test('Hits ship properly', () => {
 });
 
 test('Sunk ship properly', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.receiveAttack([ 0, 0 ]);
     newGame.receiveAttack([ 3, 4 ]);
@@ -83,7 +83,7 @@ test('Sunk ship properly', () => {
 });
 
 test('Sunk ship properly 2', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2 , [1 , 5], 'vertical');
     newGame.receiveAttack([ 0, 0 ]);
@@ -101,9 +101,9 @@ test('Sunk ship properly 2', () => {
 });
 
 test('Remove ship properly', () => {
-    const newGame = new GameBoard();
+    const newGame = new GameBoard(10);
     newGame.placeShip('Patrol Boat', 2 , [1 , 5], 'vertical');
-    newGame.removeShip('Patrol Boat', [1 , 5], 'vertical');
+    newGame.removeShip('Patrol Boat');
     expect(newGame.board[1][5]).toBe(null);
     expect(newGame.board[1][6]).toBe(null);
     expect(newGame.ships['Patrol Boat']).toBe(undefined);
