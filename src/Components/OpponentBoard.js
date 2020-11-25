@@ -16,8 +16,9 @@ function OpponentBoard(props) {
             let className = 'field';
             if (field !== null) {
                 className = field;
+                return <div className={className} key={[i,j]}>  </div>;
             }
-            return <div className={className} key={[i,j]} data={[i,j]} onClick = {e => onClick(e)}>  </div>;
+            return <div className={`${className} enemy`} key={[i,j]} data={[i,j]} onClick = {e => onClick(e)}>  </div>;
         });
     });
     

@@ -17,31 +17,33 @@ function App() {
     const [boardRearrange, setBoardRearrange] = useState(false);
 
     useEffect(() => {
-        if (playerName !== '') {
-        //Jak się zmienia imię zmień status gry na 'preparing'
-        //I ustaw nową grę z computerem.
+        if (playerName !== '' && gameStatus === 'not started') {
             setGameStatus('preparing');
         }
-        if (gameOver) {
-            setGameStatus('game over');
-        }
-    }, [playerName, gameOver]);
+    }, [playerName, gameStatus]);
 
     useEffect(() => {
-        if (moveMade === true)
+        if (moveMade === true) {
             setMoveMade(false);
+        }
     }, [moveMade]);
 
     useEffect(() => {
-        if (boardRearrange === true)
+        if (gameOver) {
+            setGameStatus('game over');
+        }
+    }, [gameOver]);
+
+
+    useEffect(() => {
+        if (boardRearrange === true) {
             setBoardRearrange(false);
+        }
     }, [boardRearrange]);
 
     const startNewGame = () => {
         setGameStatus('preparing');
     };
-
-
 
     if (gameStatus === 'not started') {
         return <WelcomeSite setPlayerName ={setPlayerName}/>;

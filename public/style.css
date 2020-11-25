@@ -138,6 +138,10 @@ body {
     background-color: white;
 }
 
+.enemy {
+    cursor: url('images/cursors.png'), auto;
+}
+
 .miss {
     background-color: rgb(216, 205, 205);
 }

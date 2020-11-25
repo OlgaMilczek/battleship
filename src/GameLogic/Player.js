@@ -9,6 +9,7 @@ class Player {
         this.gameBoard = new GameBoard();
         this.checkMove = checkMove;
         this.number = nr;
+        this.makeMove = this.makeMove.bind(this);
     } 
 
     makeShipSunk(x, y) {

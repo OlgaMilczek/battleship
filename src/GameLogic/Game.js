@@ -14,6 +14,7 @@ class Game {
         this.checkMove = this.checkMove.bind(this);
         this.playRound = this.playRound.bind(this);
         this.placeShipRandom = this.placeShipRandom.bind(this);
+        this.checkForGameOver = this.checkForGameOver.bind(this);
         this.players = {
             1: new Player(name1, 1 ,this.checkMove),
             2: new Player(name2, 2 ,this.checkMove)
@@ -61,9 +62,9 @@ class Game {
             if(moveMade) {
                 this.checkForGameOver();
                 if ( this.currentPlayer === 1) {
-                    this.currentPlayer=2;
+                    this.currentPlayer = 2;
                 } else {
-                    this.currentPlayer=1;
+                    this.currentPlayer = 1;
                 }
             }
             if (this.players[this.currentPlayer].name === 'computer') {
@@ -81,7 +82,7 @@ class Game {
     }
 
     placeShipRandom(playerNr) {
-        const playerBoard = this.players[playerNr].gameBoard;
+        let playerBoard = this.players[playerNr].gameBoard;
         for (let shipName in this.ships) {
             const shipsLength = this.ships[shipName];
             let shipPlaced;
@@ -92,7 +93,6 @@ class Game {
             }
         }
     }
-
 }
 
 export default Game;
