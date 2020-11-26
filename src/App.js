@@ -5,41 +5,51 @@ import Game from './GameLogic/Game';
 import GameOver from './Components/GameOver';
 import GameRender from './Components/Game';
 
-
 let game = undefined;
+const gameStates = {
+    PREPARING: 'preparing',
+    GAME_OVER: 'game over',
+    SHIP_PLACEMENT: 'ship placement',
+    GAME_RUNNING: 'game running'
+};
+
+const gameModes = {
+    ONE_PLAYER: 'one player', 
+    TWO_PLAYERS: 'two_players'
+};
 
 function App() {
-    const [gameStatus, setGameStatus] = useState('preparing');
+    const [gameStatus, setGameStatus] = useState(gameStates.PREPARING);
     const [moveMade, setMoveMade] = useState(false);
     const [winner, setWinner] = useState('');
     //For future development of two players mode.
-    const [gameMode, setGameMode] = useState('one player');
+    const [gameMode, setGameMode] = useState(gameModes.ONE_PLAYER);
 
     useEffect(() => {
         if (moveMade === true) {
             setMoveMade(false);
         }
-    }, [moveMade]);
+    }, [moveMade]); 
 
     useEffect(() => {
         if (winner !== '') {
-            setGameStatus('game over');
+            setGameStatus(gameStates.PREPARING.GAME_OVER);
         }
     }, [winner]);
 
     const startNewGame = () => {
-        setGameStatus('preparing');
+        setGameStatus(gameStates.PREPARING);
     };
 
-    if (gameStatus === 'preparing') {
+    if (gameStatus === gameStates.PREPARING) {
         game = new Game(gameMode, setMoveMade, setWinner);
-        setGameStatus('ship placement');
+        setGameStatus(gameStates.SHIP_PLACEMENT);
     }
     
     return (
         <div>
             <GameRender game = {game}/>
-            {gameStatus === 'game over'? <GameOver startNewGame={startNewGame} winner={winner}/> : null}
+            {gameStatus === gameStates.PREPARING.GAME_OVER ? <GameOver startNewGame={startNewGame} winner={winner}/> : null}
         </div>
     );
 }

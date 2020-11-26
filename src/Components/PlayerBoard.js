@@ -1,19 +1,27 @@
 import React from 'react'; 
 
+const fieldTypes = {
+    EMPTY: 'field',
+    HIT: 'hit', 
+    SUNK: 'sunk',
+    MISS: 'miss',
+    SHIP: 'ship'
+};
+
 function PlayerBoard(props) {
     const playerBoard = props.player.gameBoard.board;
     const content = playerBoard.map((row, i) => {
         return row.map((field, j) => {
-            let className = 'field';
+            let className = fieldTypes.EMPTY;
             if (field !== null) {
-                if (field === 'miss') {
-                    className = 'miss';
+                if (field === fieldTypes.MISS) {
+                    className = fieldTypes.MISS;
                 } else {
-                    let place = field[1];
-                    if (place === 'hit') {
-                        className = 'hit';
+                    let isHit = field.hit;
+                    if (isHit) {
+                        className = fieldTypes.HIT;
                     } else {
-                        className = 'ship';
+                        className = fieldTypes.SHIP;
                     }
                 }
             }

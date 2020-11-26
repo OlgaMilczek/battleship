@@ -103,7 +103,11 @@ class GameBoard {
                 const [nextX, nextY] = nextField;
                 const currentX = x + (i * nextX);
                 const currentY = y + (i * nextY);
-                this.board[currentX][currentY] = [shipName, i];
+                this.board[currentX][currentY] = {
+                    name: shipName,
+                    place: i,
+                    hit: false
+                };
             }
             const placedShip = new Ship(shipLength, position, coordinates);
             this.ships = {...this.ships, 
@@ -135,10 +139,10 @@ class GameBoard {
         if (this.board[x][y] === null) {
             this.board[x][y] = 'miss';
         } else {
-            const [shipName, hitPlace] = this.board[x][y];
-            this.board[x][y] = [shipName, 'hit'];
-            const hitShip = this.ships[shipName];
-            hitShip.hit(hitPlace);
+            const ship = this.board[x][y];
+            ship.hit = true;
+            const hitShip = this.ships[ship.name];
+            hitShip.hit(ship.place);
             isHit = true;
             if (hitShip.sunk) {
                 isSunk = true;

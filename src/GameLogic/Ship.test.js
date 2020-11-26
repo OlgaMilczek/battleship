@@ -32,6 +32,6 @@ test('Its sunk properly', () => {
     Carrier.hit(0);
     Carrier.hit(1);
     Carrier.hit(2);
-    expect(Carrier.sunk).toStrictEqual(false);
+    expect(Carrier.sunk).toBe(false);
 });
 

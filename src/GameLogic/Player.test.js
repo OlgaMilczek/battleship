@@ -61,9 +61,9 @@ test('Move ship properly', () => {
     expect(newPlayer.gameBoard.board[0][2]).toBe(null);
     expect(newPlayer.gameBoard.board[1][2]).toBe(null);
     expect(newPlayer.gameBoard.board[2][2]).toBe(null);
-    expect(newPlayer.gameBoard.board[3][4]).toStrictEqual(['Submarine', 0]);
-    expect(newPlayer.gameBoard.board[3][5]).toStrictEqual(['Submarine', 1]);
-    expect(newPlayer.gameBoard.board[3][6]).toStrictEqual(['Submarine', 2]);
+    expect(newPlayer.gameBoard.board[3][4]).toStrictEqual({hit: false, name: 'Submarine', place: 0});
+    expect(newPlayer.gameBoard.board[3][5]).toStrictEqual({hit: false, name: 'Submarine', place: 1});
+    expect(newPlayer.gameBoard.board[3][6]).toStrictEqual({hit: false, name: 'Submarine', place: 2});
 });
 
 test('Ships stays tha same place when it cannot be moved', () => {
@@ -71,10 +71,10 @@ test('Ships stays tha same place when it cannot be moved', () => {
     newPlayer.gameBoard.placeShip('Submarine',3 , [0,2], 'horizontal');
     newPlayer.gameBoard.placeShip('Patrol boat',2 , [3,4], 'horizontal');
     newPlayer.moveShip('Submarine', [3,4], 'vertical');
-    expect(newPlayer.gameBoard.board[0][2]).toStrictEqual(['Submarine', 0]);
-    expect(newPlayer.gameBoard.board[1][2]).toStrictEqual(['Submarine', 1]);
-    expect(newPlayer.gameBoard.board[2][2]).toStrictEqual(['Submarine', 2]);
-    expect(newPlayer.gameBoard.board[3][4]).toStrictEqual(['Patrol boat', 0]);
+    expect(newPlayer.gameBoard.board[0][2]).toStrictEqual({hit: false, name: 'Submarine', place: 0});
+    expect(newPlayer.gameBoard.board[1][2]).toStrictEqual({hit: false, name: 'Submarine', place: 1});
+    expect(newPlayer.gameBoard.board[2][2]).toStrictEqual({hit: false, name: 'Submarine', place: 2});
+    expect(newPlayer.gameBoard.board[3][4]).toStrictEqual({hit: false, name: 'Patrol boat', place: 0});
     expect(newPlayer.gameBoard.board[3][5]).toBe(null);
     expect(newPlayer.gameBoard.board[3][6]).toBe(null);
 });

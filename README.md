@@ -1,10 +1,10 @@
 # Battleship TDD
   
-This project was created as tge part of The Odin Project curriculum.(https://www.theodinproject.com/courses/javascript/lessons/battleship)
+This project was created as a part of The Odin Project curriculum.(https://www.theodinproject.com/courses/javascript/lessons/battleship)
 
 ## Main objective
 
-The main goal was to create app with using TDD and separate game logic from rendering. 
+The main goal was to create app using TDD and separate game logic from rendering. 
 
 ## Used technologies
 

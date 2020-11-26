@@ -1,3 +1,8 @@
+const possiblePositions = {
+    VERTICAL: 'vertical',
+    HORIZONTAL: 'horizontal'
+};
+
 class Ship {
     constructor(length, position, coordinates) {
         this.length = length; 
@@ -33,7 +38,7 @@ class Ship {
     }
 
     changeLocation(newPosition, newCoordinates) {
-        if (newPosition !== 'horizontal' || newPosition !== 'vertical') {
+        if (newPosition !== possiblePositions.VERTICAL || newPosition !== possiblePositions.HORIZONTAL) {
             throw new Error ('Somthing went wrong! Wrong ship position');
         }
         this.position = newPosition;

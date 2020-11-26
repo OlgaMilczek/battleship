@@ -4,42 +4,118 @@ test('Placed ship properly', () => {
     const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2 , [1 , 5], 'vertical');
-    expect(newGame.board[3][4]).toStrictEqual(['Carrier', 0]);
-    expect(newGame.board[4][4]).toStrictEqual(['Carrier', 1]);
-    expect(newGame.board[5][4]).toStrictEqual(['Carrier', 2]);
-    expect(newGame.board[6][4]).toStrictEqual(['Carrier', 3]);
-    expect(newGame.board[7][4]).toStrictEqual(['Carrier', 4]);
-    expect(newGame.board[1][5]).toStrictEqual(['Patrol Boat', 0]);
-    expect(newGame.board[1][6]).toStrictEqual(['Patrol Boat', 1]);
+    expect(newGame.board[3][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 0,
+        hit: false
+    });
+    expect(newGame.board[4][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 1,
+        hit: false
+    });
+    expect(newGame.board[5][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 2,
+        hit: false
+    });
+    expect(newGame.board[6][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 3,
+        hit: false
+    });
+    expect(newGame.board[7][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 4,
+        hit: false
+    });
+    expect(newGame.board[1][5]).toStrictEqual({
+        name: 'Patrol Boat',
+        place: 0,
+        hit: false
+    });
+    expect(newGame.board[1][6]).toStrictEqual({
+        name: 'Patrol Boat',
+        place: 1,
+        hit: false
+    });
 });
 
 test('Can placed ship along border', () => {
     const newGame = new GameBoard(10);
     newGame.placeShip('Patrol Boat', 2 , [9 , 5], 'vertical');
-    expect(newGame.board[9][5]).toStrictEqual(['Patrol Boat', 0]);
-    expect(newGame.board[9][6]).toStrictEqual(['Patrol Boat', 1]);
+    expect(newGame.board[9][5]).toStrictEqual({
+        name: 'Patrol Boat',
+        place: 0,
+        hit: false
+    });
+    expect(newGame.board[9][6]).toStrictEqual({
+        name: 'Patrol Boat',
+        place: 1,
+        hit: false
+    });
 });
 
 test('Can\'t place two ships in one place', () => {
     const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5, [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2, [4 , 4], 'vertical');
-    expect(newGame.board[3][4]).toStrictEqual(['Carrier', 0]);
-    expect(newGame.board[4][4]).toStrictEqual(['Carrier', 1]);
-    expect(newGame.board[5][4]).toStrictEqual(['Carrier', 2]);
-    expect(newGame.board[6][4]).toStrictEqual(['Carrier', 3]);
-    expect(newGame.board[7][4]).toStrictEqual(['Carrier', 4]);
+    expect(newGame.board[3][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 0,
+        hit: false
+    });
+    expect(newGame.board[4][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 1,
+        hit: false
+    });
+    expect(newGame.board[5][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 2,
+        hit: false
+    });
+    expect(newGame.board[6][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 3,
+        hit: false
+    });
+    expect(newGame.board[7][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 4,
+        hit: false
+    });
 });
 
 test('Can\'t place two ships next to each other', () => {
     const newGame = new GameBoard(10);
     newGame.placeShip('Carrier', 5 , [3 , 4], 'horizontal');
     newGame.placeShip('Patrol Boat', 2 , [3 , 5], 'horizontal');
-    expect(newGame.board[3][4]).toStrictEqual(['Carrier', 0]);
-    expect(newGame.board[4][4]).toStrictEqual(['Carrier', 1]);
-    expect(newGame.board[5][4]).toStrictEqual(['Carrier', 2]);
-    expect(newGame.board[6][4]).toStrictEqual(['Carrier', 3]);
-    expect(newGame.board[7][4]).toStrictEqual(['Carrier', 4]);
+    expect(newGame.board[3][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 0,
+        hit: false
+    });
+    expect(newGame.board[4][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 1,
+        hit: false
+    });
+    expect(newGame.board[5][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 2,
+        hit: false
+    });
+    expect(newGame.board[6][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 3,
+        hit: false
+    });
+    expect(newGame.board[7][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 4,
+        hit: false
+    });
     expect(newGame.board[3][5]).toBe(null);
 });
 
@@ -63,8 +139,16 @@ test('Hits ship properly', () => {
     newGame.receiveAttack([ 3, 4 ]);
     newGame.receiveAttack([ 7, 4 ]);
 
-    expect(newGame.board[3][4]).toStrictEqual(['Carrier' ,'hit']);
-    expect(newGame.board[7][4]).toStrictEqual(['Carrier' ,'hit']);
+    expect(newGame.board[3][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 0,
+        hit: true
+    });
+    expect(newGame.board[7][4]).toStrictEqual({
+        name: 'Carrier',
+        place: 4,
+        hit: true
+    });
 });
 
 test('Sunk ship properly', () => {
@@ -78,7 +162,7 @@ test('Sunk ship properly', () => {
     newGame.receiveAttack([ 7, 4 ]);
 
     const hitShip = newGame.ships['Carrier'];
-    expect(hitShip.sunk).toStrictEqual(true);
+    expect(hitShip.sunk).toBe(true);
     expect(newGame.sunkShip).toBe(1);
 });
 
