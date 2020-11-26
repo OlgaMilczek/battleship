@@ -2,6 +2,12 @@ import GameBoard from './Gameboard';
 
 import {computerMove, randomPosition} from './computerMoves';
 
+const fieldTypes = {
+    HIT: 'hit', 
+    SUNK: 'sunk',
+    MISS: 'miss'
+};
+
 class Player {
     constructor(nr, isComputer ,checkMove, size) {
         this.gameBoard = new GameBoard(size);
@@ -21,8 +27,8 @@ class Player {
             let nextY = y + deltaY;
             let filedExist = this.gameBoard.checkFiledExist([nextX, nextY]);
             if(filedExist) {
-                while (filedExist && this.opponentBoard[nextX][nextY] === 'hit') {
-                    this.opponentBoard[nextX][nextY] = 'sunk';
+                while (filedExist && this.opponentBoard[nextX][nextY] === fieldTypes.HIT) {
+                    this.opponentBoard[nextX][nextY] = fieldTypes.SUNK;
                     nextX += deltaX;
                     nextY += deltaY;
                     filedExist = this.gameBoard.checkFiledExist([nextX, nextY]);
@@ -36,13 +42,13 @@ class Player {
         if (this.opponentBoard[x][y] === null) {
             const [opponentHit, opponentSunk] = this.checkMove(coordinates, this.number);
             if (opponentHit && !opponentSunk) {
-                this.opponentBoard[x][y] = 'hit';
+                this.opponentBoard[x][y] = fieldTypes.HIT;
             }
             else if (opponentHit  && opponentSunk) {
-                this.opponentBoard[x][y] = 'sunk';
+                this.opponentBoard[x][y] = fieldTypes.SUNK;
                 this.makeShipSunk(x, y);
             } else {
-                this.opponentBoard[x][y] = 'miss';
+                this.opponentBoard[x][y] = fieldTypes.MISS;
             }
             return true;
         }

@@ -16,7 +16,7 @@
 
 body {
     background-color: #d2d3d6;
-    color: rgb(41, 40, 44);
+    color: #29282c;
     box-sizing: border-box;
     height: 100vh;
     width: 100vw;  
@@ -40,9 +40,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(129, 129, 129, 0.5);
+    background-color:#8181817a;
     z-index: 5;
-    opacity: 1;
 }
 
 .newGame {
@@ -155,17 +154,17 @@ body {
 }
 
 .miss {
-    background-color: rgb(216, 205, 205);
+    background-color: #d8cdcd;
 }
 
 .hit {
-    background-color: rgb(145, 86, 86);
+    background-color: #915656;
 }
 
 .sunk {
-    background-color: rgb(112, 52, 52);
+    background-color: #703434;
 }
 
 .ship {
-    background-color: rgb(50, 54, 102);
+    background-color: #323666;
 }
