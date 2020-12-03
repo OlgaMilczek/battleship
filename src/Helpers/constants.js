@@ -25,7 +25,8 @@ const ships = {
 
 const fieldTypes = {
     SHIP: 'ship',
-    EMPTY: 'field',
+    EMPTY: 'empty',
+    FIELD: 'field',
     HIT: 'hit', 
     SUNK: 'sunk',
     MISS: 'miss'

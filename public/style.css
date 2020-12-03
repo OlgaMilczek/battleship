@@ -83,15 +83,13 @@ body {
     position: relative;
     text-align: center;
     padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto;
     cursor: pointer; 
     cursor: url('./images/cursors.png'), auto;
     z-index: inherit;
 }
 
-.eightbit-btn:hover,
-.eightbit-btn:focus {
+.eightbit-btn:hover {
     background: var(--sec-button-background);
     box-shadow: inset calc(-1,5 var(--shadow-width)) calc(var(--shadow-width)* -1.5) 0px 0px var(--shadow-color);
 }
@@ -146,13 +144,19 @@ body {
     margin: auto;
 }
 
-.m-startGame {
+.m-gameInfo {
+    font-size: 0.8em;
     text-align: center;
-    line-height: 3em;
+    line-height: 2.5em;
 }
 
-.field {
+.field, 
+.empty {
     background-color: white;
+}
+
+.field:hover {
+    background-color: rgb(221, 221, 221);
 }
 
 .enemy {
@@ -173,4 +177,12 @@ body {
 
 .ship {
     background-color: #323666;
+}
+
+.selected-ship {
+    background-color: #272a50;
+}
+
+.correct {
+    background-color: #51568d;
 }

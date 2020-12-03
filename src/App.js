@@ -5,18 +5,9 @@ import Game from './GameLogic/Game';
 import GameOver from './Components/GameOver';
 import GameRender from './Components/Game';
 
-let game = undefined;
-const gameStates = {
-    PREPARING: 'preparing',
-    GAME_OVER: 'game over',
-    SHIP_PLACEMENT: 'ship placement',
-    GAME_RUNNING: 'game running'
-};
+import {gameModes, gameStates} from './Helpers/constants';
 
-const gameModes = {
-    ONE_PLAYER: 'one player', 
-    TWO_PLAYERS: 'two_players'
-};
+let game = undefined;
 
 function App() {
     const [gameStatus, setGameStatus] = useState(gameStates.PREPARING);
@@ -41,12 +32,7 @@ function App() {
         setGameStatus(gameStates.PREPARING);
     };
 
-    const startButton = (
-        <div className='m-startGame'>
-            <p>Place yours ship and start the game.</p>
-            <button className='eightbit eightbit-btn' onClick={() => setGameStatus(gameStates.GAME_RUNNING)}>Start game</button>
-        </div>
-    );
+    const startButton = <button className='eightbit eightbit-btn' onClick={() => setGameStatus(gameStates.GAME_RUNNING)}>Start game</button>;
 
     if (gameStatus === gameStates.PREPARING) {
         game = new Game(gameMode, setMoveMade, setWinner);
@@ -56,8 +42,7 @@ function App() {
     return (
         <div>
             <h1 className='title'>Battleships</h1>
-            <GameRender game = {game} gameStatus={gameStatus}/>
-            {gameStatus === gameStates.SHIP_PLACEMENT ? startButton : null}
+            <GameRender game = {game} gameStatus={gameStatus} startButton = {startButton}/>
             {gameStatus === gameStates.GAME_OVER ? <GameOver startNewGame={startNewGame} winner={winner}/> : null}
 
         </div>
