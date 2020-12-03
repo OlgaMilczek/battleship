@@ -1,10 +1,26 @@
 import React from 'react'; 
 
-import {fieldTypes} from '../Helpers/constants';
+import {gameStates, fieldTypes, possiblePositions} from '../Helpers/constants';
 
 function PlayerBoard(props) {
     const playerBoard = props.player.gameBoard.board;
     const playerShips = props.player.gameBoard.ships;
+
+    const rotateShip = (shipName) => {
+        if (props.gameStatus !== gameStates.SHIP_PLACEMENT) {
+            return null;
+        }
+        const coordinates = playerShips[shipName].coordinates;
+        const oldPosition = playerShips[shipName].position;
+        let newPosition; 
+        if (oldPosition === possiblePositions.VERTICAL) {
+            newPosition = possiblePositions.HORIZONTAL;
+        } else {
+            newPosition = possiblePositions.VERTICAL;
+        }
+        props.player.moveShip(shipName, coordinates, newPosition);
+        props.shipMoved(true);
+    };
 
     const content = playerBoard.map((row, i) => {
         return row.map((field, j) => {
@@ -24,6 +40,7 @@ function PlayerBoard(props) {
                         className = fieldTypes.SHIP;
                     }
                 }
+                return <div className={className} key={[i,j]} onDoubleClick ={() => rotateShip(field.name)}> </div>;
             }
             return <div className={className} key={[i,j]} > </div>;
         });

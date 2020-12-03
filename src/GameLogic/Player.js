@@ -59,7 +59,9 @@ class Player {
         const canShipBeMoved = this.gameBoard.placeShip(shipName, shipLength,  NewCoordinates, NewPosition);
         if (!canShipBeMoved) {
             this.gameBoard.placeShip(shipName, shipLength,  OldCoordinates, OldPosition);
+            return false;
         }
+        return true;
     }
 
 
