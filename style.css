@@ -1,0 +1,188 @@
+:root {
+    --outline-width: 6px;
+    --shadow-width: 4px;
+
+    --button-background: #cfcfcf;
+    --sec-button-background: #a3a3a3;
+    --shadow-color:  #7c7c7c;
+    --font-family: 'Press Start 2P', cursive;
+}
+
+* {
+    cursor: url('./images/indeks.png'), auto;
+    font-family: var(--font-family)
+}
+
+
+body {
+    background-color: #d2d3d6;
+    color: #29282c;
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;  
+}
+
+#root {
+    height: 100%;
+}
+
+.o-popup {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left:0;
+}
+
+.o-popup-overlay {
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:#8181817a;
+    z-index: 5;
+}
+
+.newGame {
+    padding: 20px;
+    margin: auto;
+    position: fixed;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    text-align: center;
+    z-index: 10;
+}
+
+.newGame h2,
+.newGame h3 {
+    margin-bottom: 30px;
+}
+
+.newGame h2 {
+    font-size: 24px;
+}
+
+.title {
+    padding-top: 50px;
+    font-size: 50px;
+    text-align: center;
+}
+
+.eightbit {
+    background: var(--button-background);
+    color: white;
+    box-shadow: inset calc(-1 *var(--shadow-width)) calc(-1* var(--shadow-width)) 0px 0px var(--shadow-color);
+}
+
+.eightbit-btn {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    margin: 10px auto;
+    cursor: pointer; 
+    cursor: url('./images/cursors.png'), auto;
+    z-index: inherit;
+}
+
+.eightbit-btn:hover {
+    background: var(--sec-button-background);
+    box-shadow: inset calc(-1,5 var(--shadow-width)) calc(var(--shadow-width)* -1.5) 0px 0px var(--shadow-color);
+}
+
+.eightbit-btn:active {
+    box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px var(--shadow-color);
+}
+
+.eightbit:before,
+.eightbit:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    }
+
+.eightbit:before {
+    top: calc(-1 * var(--outline-width));
+    left: 0;
+    border-top: var(--outline-width) black solid;
+    border-bottom: var(--outline-width) black solid;
+    }
+
+.eightbit:after {
+        left: calc(-1 * var(--outline-width));;
+        top: 0;
+        border-left: var(--outline-width) black solid;
+        border-right: var(--outline-width) black solid;
+}
+
+.preparation {
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    max-width: 960px;
+}
+
+.preparation h2 {
+    margin: 20px auto;
+    font-size: 24px;
+}
+
+.playerBoard {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    grid-gap: 1px;
+    background-color:black;
+    border: 2px solid black;
+    width: min-content;
+    margin: auto;
+}
+
+.m-gameInfo {
+    font-size: 0.8em;
+    text-align: center;
+    line-height: 2.5em;
+}
+
+.field, 
+.empty {
+    background-color: white;
+}
+
+.field:hover {
+    background-color: rgb(221, 221, 221);
+}
+
+.enemy {
+    cursor: url('./images/cursors.png'), auto;
+}
+
+.miss {
+    background-color: #d8cdcd;
+}
+
+.hit {
+    background-color: #915656;
+}
+
+.sunk {
+    background-color: #703434;
+}
+
+.ship {
+    background-color: #323666;
+}
+
+.selected-ship {
+    background-color: #272a50;
+}
+
+.correct {
+    background-color: #51568d;
+}
