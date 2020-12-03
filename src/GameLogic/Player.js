@@ -2,11 +2,7 @@ import GameBoard from './Gameboard';
 
 import {computerMove, randomPosition} from './computerMoves';
 
-const fieldTypes = {
-    HIT: 'hit', 
-    SUNK: 'sunk',
-    MISS: 'miss'
-};
+import {fieldTypes} from '../Helpers/constants';
 
 class Player {
     constructor(nr, isComputer ,checkMove, size) {
