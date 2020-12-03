@@ -25,7 +25,7 @@ function Game(props) {
     if (props.gameStatus ===  gameStates.SHIP_PLACEMENT) {
         opponentHeader = 'Place your ship';
         opponentContent = <div className='m-gameInfo'>
-            <p>Double click to rotate your ship, drag and drop to move ship <br />
+            <p>Click on ship to select it. To rotate click on selected ship to move click on blank filed.<br/>
             or click button for new random placement. </p>
             <button className='eightbit eightbit-btn' onClick={newRandomPlacement}>Place random</button>
             <p> When you are done click Start Game button to start.</p>

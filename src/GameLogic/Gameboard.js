@@ -64,7 +64,7 @@ class GameBoard {
         return nextField;
     }
 
-    checkShipPlacement(shipLength, coordinates, nextField) {
+    checkShipPlacement(shipName, shipLength, coordinates, nextField) {
         const [nextX, nextY] = nextField;
         const [x, y] = coordinates;
         for (let i = 0; i < shipLength; i++) {
@@ -76,7 +76,7 @@ class GameBoard {
                 const filedExist = this.checkFiledExist([currentX, currentY], this.board);
                 if (filedExist) {
                     const fieldChecked = this.checkField([currentX, currentY], this.board);
-                    if (!fieldChecked) {
+                    if (!fieldChecked && this.board[currentX][currentY].name !== shipName) {
                         return false;
                     }
                 } else {
@@ -97,7 +97,7 @@ class GameBoard {
         and if it can place the ship. */
         const nextField = this.checkNextCoordinates(position);
         const [x, y] = coordinates;
-        const shipCanBePlaced = this.checkShipPlacement(shipLength, coordinates, nextField);
+        const shipCanBePlaced = this.checkShipPlacement(shipName, shipLength, coordinates, nextField);
         if (shipCanBePlaced) {
             for (let i = 0; i < shipLength; i++) {
                 const [nextX, nextY] = nextField;
