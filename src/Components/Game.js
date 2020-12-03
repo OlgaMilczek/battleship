@@ -41,7 +41,7 @@ function Game(props) {
             <div className='preparation'>
                 <h2>Your board</h2>
                 <h2>{opponentHeader}</h2>
-                <PlayerBoard player={player} gameStatus={props.gameStatus} shipMoved = {setShipsMoved}/>
+                <PlayerBoard player={player} gameStatus={props.gameStatus} shipsMoved= {shipsMoved}/>
                 {opponentContent}
             </div>
         </div>

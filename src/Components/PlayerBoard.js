@@ -65,32 +65,12 @@ function PlayerBoard(props) {
         }
     };
 
-    if (props.gameStatus !== gameStates.SHIP_PLACEMENT) {
-        content = playerBoard.map((row, i) => {
-            return row.map((field, j) => {
-                let className = fieldTypes.EMPTY;
-                if (field !== null) {
-                    if (field === fieldTypes.MISS) {
-                        className = fieldTypes.MISS;
-                    } else {
-                        if (field.hit) {
-                            if (playerShips[field.name].sunk) {
-                                className = fieldTypes.SUNK;
-                            } else {
-                                className = fieldTypes.HIT;
-                            }
-                        } else {
-                            className = fieldTypes.SHIP;
-                        }
-                    }
-                    return <div className={className} key={[i,j]}> </div>;
-                }
-                return <div className={className} key={[i,j]}> </div>;
-            });
-        });
+    if (props.shipsMoved) {
+        setSelectedShip('');
+        setCorrectFields([]);
     }
 
-    else {
+    if (props.gameStatus === gameStates.SHIP_PLACEMENT) {
         content = playerBoard.map((row, i) => {
             return row.map((field, j) => {
                 let className = fieldTypes.FIELD;
@@ -113,6 +93,29 @@ function PlayerBoard(props) {
                     onClick={() => moveShip([i,j])} 
                     onMouseOver={() => checkFiledPlacement([i,j])}> 
                 </div>;
+            });
+        });
+    } else {
+        content = playerBoard.map((row, i) => {
+            return row.map((field, j) => {
+                let className = fieldTypes.EMPTY;
+                if (field !== null) {
+                    if (field === fieldTypes.MISS) {
+                        className = fieldTypes.MISS;
+                    } else {
+                        if (field.hit) {
+                            if (playerShips[field.name].sunk) {
+                                className = fieldTypes.SUNK;
+                            } else {
+                                className = fieldTypes.HIT;
+                            }
+                        } else {
+                            className = fieldTypes.SHIP;
+                        }
+                    }
+                    return <div className={className} key={[i,j]}> </div>;
+                }
+                return <div className={className} key={[i,j]}> </div>;
             });
         });
     }
