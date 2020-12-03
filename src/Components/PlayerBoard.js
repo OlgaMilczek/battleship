@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {gameStates, fieldTypes, possiblePositions} from '../Helpers/constants';
 
+
 function PlayerBoard(props) {
     const [selectedShip, setSelectedShip] = useState('');
     const [correctFields, setCorrectFields]  = useState([]);
