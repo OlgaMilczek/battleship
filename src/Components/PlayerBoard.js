@@ -4,6 +4,8 @@ import {fieldTypes} from '../Helpers/constants';
 
 function PlayerBoard(props) {
     const playerBoard = props.player.gameBoard.board;
+    const playerShips = props.player.gameBoard.ships;
+
     const content = playerBoard.map((row, i) => {
         return row.map((field, j) => {
             let className = fieldTypes.EMPTY;
@@ -13,7 +15,11 @@ function PlayerBoard(props) {
                 } else {
                     let isHit = field.hit;
                     if (isHit) {
-                        className = fieldTypes.HIT;
+                        if (playerShips[field.name].sunk) {
+                            className = fieldTypes.SUNK;
+                        } else {
+                            className = fieldTypes.HIT;
+                        }
                     } else {
                         className = fieldTypes.SHIP;
                     }
