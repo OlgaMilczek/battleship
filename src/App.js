@@ -33,13 +33,20 @@ function App() {
 
     useEffect(() => {
         if (winner !== '') {
-            setGameStatus(gameStates.PREPARING.GAME_OVER);
+            setGameStatus(gameStates.GAME_OVER);
         }
     }, [winner]);
 
     const startNewGame = () => {
         setGameStatus(gameStates.PREPARING);
     };
+
+    const startButton = (
+        <div className='m-startGame'>
+            <p>Place yours ship and start the game.</p>
+            <button className='eightbit eightbit-btn' onClick={() => setGameStatus(gameStates.GAME_RUNNING)}>Start game</button>
+        </div>
+    );
 
     if (gameStatus === gameStates.PREPARING) {
         game = new Game(gameMode, setMoveMade, setWinner);
@@ -48,8 +55,11 @@ function App() {
     
     return (
         <div>
-            <GameRender game = {game}/>
-            {gameStatus === gameStates.PREPARING.GAME_OVER ? <GameOver startNewGame={startNewGame} winner={winner}/> : null}
+            <h1 className='title'>Battleships</h1>
+            <GameRender game = {game} gameStatus={gameStatus}/>
+            {gameStatus === gameStates.SHIP_PLACEMENT ? startButton : null}
+            {gameStatus === gameStates.GAME_OVER ? <GameOver startNewGame={startNewGame} winner={winner}/> : null}
+
         </div>
     );
 }

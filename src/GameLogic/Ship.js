@@ -1,7 +1,4 @@
-const possiblePositions = {
-    VERTICAL: 'vertical',
-    HORIZONTAL: 'horizontal'
-};
+import {possiblePositions} from '../Helpers/constants';
 
 class Ship {
     constructor(length, position, coordinates) {
