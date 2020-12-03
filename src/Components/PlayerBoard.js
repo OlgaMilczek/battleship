@@ -1,12 +1,6 @@
 import React from 'react'; 
 
-const fieldTypes = {
-    EMPTY: 'field',
-    HIT: 'hit', 
-    SUNK: 'sunk',
-    MISS: 'miss',
-    SHIP: 'ship'
-};
+import {fieldTypes} from '../Helpers/constants';
 
 function PlayerBoard(props) {
     const playerBoard = props.player.gameBoard.board;

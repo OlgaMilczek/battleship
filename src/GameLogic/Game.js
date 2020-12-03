@@ -1,15 +1,7 @@
 import Player from './Player';
 import {computerMove} from './computerMoves';
 
-const ships = {
-    'Carrier': 5, 
-    'Battleship': 4, 
-    'Destroyer': 3, 
-    'Submarine': 3, 
-    'Patrol Boat': 2
-};
-
-const SIZE = 10;
+import {ships, SIZE} from '../Helpers/constants';
 
 class Game {
     constructor(gameMode, setMoveMade, setWinner) {

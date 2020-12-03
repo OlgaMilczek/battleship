@@ -1,7 +1,4 @@
-const possiblePositions = {
-    VERTICAL: 'vertical',
-    HORIZONTAL: 'horizontal'
-};
+import {possiblePositions} from '../Helpers/constants';
 
 function randomInt(num) {
     return Math.floor(Math.random() * num);
